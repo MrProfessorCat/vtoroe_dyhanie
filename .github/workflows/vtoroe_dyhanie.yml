@@ -53,3 +53,34 @@ jobs:
             file: ./infra/Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
+
+  deploy:
+    if: github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    needs: build_and_push_to_docker_hub
+    steps:
+    - name: executing remote ssh commands to deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        script: |
+            mkdir -p /home/vtoroe_dyhanie && cd $_
+            echo TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} >> .env
+            docker stop $(docker ps -aq)
+            docker rmi $(docker images -aq)
+            docker pull ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
+            docker run --rm ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
+
+    send_message:
+      runs-on: ubuntu-latest
+      needs: deploy
+      steps:
+      - name: send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ github.workflow }} успешно выполнен!
