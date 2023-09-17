@@ -34,7 +34,7 @@ jobs:
         python -m flake8
 
   build_and_push_to_docker_hub:
-      name: Push Docker image to Docker Hub
+      name: push docker image to DockerHub
       runs-on: ubuntu-latest
       needs: tests
       steps:
@@ -72,7 +72,7 @@ jobs:
             docker stop $(docker ps -aq)
             docker rmi $(docker images -aq)
             docker pull ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
-            docker run --rm ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
+            docker run -d --rm ${{ secrets.DOCKER_USERNAME }}/vtordish:latest
 
   send_message:
     runs-on: ubuntu-latest
