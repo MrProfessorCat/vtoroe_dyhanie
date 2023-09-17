@@ -71,12 +71,14 @@ jobs:
         # Создаем директорию /home/vtoroe_dyhanie и заходим в нее
         # Учитывая, что docker-compose.yaml уже должен находиться в директории,
         # создание директории - необязательная команда
-        # Далее создаем .env файл и в него записывает токен бота из secrets GitHub
+        # Удаляем существующий .env файл
+        # Создаем новый .env файл и в него записывает токен бота из secrets GitHub
         # Останавливаем работающие контейнеры и удаляем их
         # Удаляем все имеющиеся на сервере docker-образы
         # Запускаем docker-compose в фоновом режиме
         script: |
             mkdir -p /home/vtoroe_dyhanie && cd $_
+            rm -f .env
             echo TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} >> .env
             docker-compose rm -fsv
             docker rmi $(docker images -aq)
