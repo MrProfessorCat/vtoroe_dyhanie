@@ -10,16 +10,10 @@ jobs:
   # Проверяем код в папке src/ с помощью flake8
   tests:
     name: Code test
-    # «Раннер» — создание изолированного окружения с последней версией Ubuntu 
     runs-on: ubuntu-latest
-
     steps:
-    # Запуск actions checkout — готового скрипта 
-    # для клонирования репозитория
     - uses: actions/checkout@v3
     - name: Set up Python
-      # Запуск actions setup-python — готового скрипта 
-      # для развёртывания окружения Python
       uses: actions/setup-python@v4
       with:
         python-version: 3.11
@@ -74,6 +68,13 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
+        # Создаем директорию /home/vtoroe_dyhanie и заходим в нее
+        # Учитывая, что docker-compose.yaml уже должен находиться в директории,
+        # создание директории - необязательная команда
+        # Далее создаем .env файл и в него записывает токен бота из secrets GitHub
+        # Останавливаем работающие контейнеры и удаляем их
+        # Удаляем все имеющиеся на сервере docker-образы
+        # Запускаем docker-compose в фоновом режиме
         script: |
             mkdir -p /home/vtoroe_dyhanie && cd $_
             echo TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} >> .env
@@ -83,6 +84,7 @@ jobs:
 
   send_message:
     # Через наш телеграм-бот отправим разработчику сообщение об успешном деплое
+    name: Send message
     runs-on: ubuntu-latest
     needs: deploy
     steps:
