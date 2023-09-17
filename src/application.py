@@ -1,6 +1,5 @@
 from telegram.ext import Application, CommandHandler
 
-
 from bot.conversations.command_application import help, stop
 from bot.core.settings import settings
 from bot.handlers import greeting
