@@ -29,20 +29,33 @@ jobs:
         cd src/
         python -m flake8
 
-  copy_to_server:
-    name: Copy code to server
+
+  job-public-repo-ubuntu:
+    name: Clone repository
     runs-on: ubuntu-latest
     needs: tests
-    steps:
-      - name: Copy src
-        uses: garygrossgarten/github-action-scp@release
+    steps:   
+      - name: Clone MrProfessorCat/vtoroe_dyhanie PUBLIC repository
+        uses: GuillaumeFalourd/clone-github-repo-action@main
         with:
-          local: src
-          remote: /home/vtoroe_dyhanie 
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          privateKey: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+          owner: 'MrProfessorCat'
+          repository: 'vtoroe_dyhanie'
+
+
+  # copy_to_server:
+  #   name: Copy code to server
+  #   runs-on: ubuntu-latest
+  #   needs: tests
+  #   steps:
+  #     - name: Copy src
+  #       uses: garygrossgarten/github-action-scp@release
+  #       with:
+  #         local: src
+  #         remote: /home/vtoroe_dyhanie 
+  #         host: ${{ secrets.HOST }}
+  #         username: ${{ secrets.USER }}
+  #         privateKey: ${{ secrets.SSH_KEY }}
+  #         passphrase: ${{ secrets.PASSPHRASE }}
 
   # build_and_push:
   #     # Собираем образ контейнера и отправляем его на GitHub
