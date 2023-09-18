@@ -32,14 +32,16 @@ jobs:
   copy_to_server:
     name: Copy code to server
     runs-on: ubuntu-latest
-    uses: garygrossgarten/github-action-scp@release
-    with:
-      local: src
-      remote: /home/vtoroe_dyhanie 
-      host: ${{ secrets.HOST }}
-      username: ${{ secrets.USER }}
-      key: ${{ secrets.SSH_KEY }}
-      passphrase: ${{ secrets.PASSPHRASE }}
+    steps:
+      - name: Copy src
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: src
+          remote: /home/vtoroe_dyhanie 
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
 
   # build_and_push:
   #     # Собираем образ контейнера и отправляем его на GitHub
