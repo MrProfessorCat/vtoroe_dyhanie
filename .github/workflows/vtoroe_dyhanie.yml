@@ -52,7 +52,7 @@ jobs:
         # Удаляем все имеющиеся на сервере docker-образы
         # Запускаем docker-compose в фоновом режиме
         script: |
-            cd /home/
+            rm -rf /home/vtoroe_dyhanie/
             git clone git@github.com:MrProfessorCat/vtoroe_dyhanie.git
             cd /home/vtoroe_dyhanie
             rm -f .env
