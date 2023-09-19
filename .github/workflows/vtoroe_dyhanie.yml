@@ -50,7 +50,11 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         source: "deploy.tar"
         target: "/home/"
-
+        script: |
+            cd /home
+            tar -xvf deploy.tar
+            cd /build
+            
   # copy_to_server:
   #   name: Copy code to server
   #   runs-on: ubuntu-latest
