@@ -37,7 +37,7 @@ jobs:
     steps:
     - name: Create archive with project
       run: |
-        mkdir -p ../build
+        mkdir ../build
         cp -TR . ../build
         tar -cvf deploy.tar ../build/
 
