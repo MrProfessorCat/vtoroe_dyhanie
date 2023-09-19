@@ -38,7 +38,7 @@ jobs:
     - name: Create archive with project
       run: |
         mkdir -p ../build
-        cp -tr . ../build
+        cp -TR . ../build
         tar -cvf deploy.tar ../build/
 
     - name: Copy archive to server
