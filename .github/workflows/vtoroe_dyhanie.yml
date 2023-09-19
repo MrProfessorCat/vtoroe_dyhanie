@@ -36,7 +36,7 @@ jobs:
     needs: tests
     steps:
     - name: Create archive with project
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
       run: |
         rm -fr ../build
         mkdir -p ../build
