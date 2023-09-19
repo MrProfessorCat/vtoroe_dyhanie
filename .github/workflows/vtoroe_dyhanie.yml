@@ -55,6 +55,17 @@ jobs:
             tar -xvf deploy.tar
             cd /build
             
+    - name: Run docker
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        script: |
+            cd /home
+            tar -xvf deploy.tar
+            cd /build
   # copy_to_server:
   #   name: Copy code to server
   #   runs-on: ubuntu-latest
