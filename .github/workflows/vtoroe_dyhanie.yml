@@ -52,17 +52,21 @@ jobs:
         target: "/home/"
 
   run_bot:          
-    - name: Run bot
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: |
-            cd /home
-            tar -xvf deploy.tar
-            cd /build
+    name: Run bot
+    runs-on: ubuntu-latest
+    needs: copy_project_on_server
+    steps:
+      - name: Run bot
+        uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.SSH_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            script: |
+              cd /home
+              tar -xvf deploy.tar
+              cd /build
   # copy_to_server:
   #   name: Copy code to server
   #   runs-on: ubuntu-latest
