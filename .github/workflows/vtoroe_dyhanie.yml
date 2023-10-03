@@ -51,6 +51,7 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         source: "./"
         target: "/home/build"
+        strip_components: 1
 
   # # Распаковываем архив и через docker-compose собираем
   # # и запускаем контейнер с ботом
