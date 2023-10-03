@@ -49,8 +49,8 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        source: "./*"
-        target: "/home/"
+        source: "./"
+        target: "/home/build"
 
   # # Распаковываем архив и через docker-compose собираем
   # # и запускаем контейнер с ботом
